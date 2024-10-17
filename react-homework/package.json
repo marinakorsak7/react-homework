@@ -1,0 +1,20 @@
+{
+  "name": "react-homework",
+  "version": "1.0.0",
+  "description": "This is my 1st react project.",
+  "main": "index.js",
+  "author": "Maryna Korsak",
+  "license": "EHU",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  },
+  "devDependencies": {
+    "vite": "^3.0.0"
+  }
+}
