@@ -1,0 +1,23 @@
+.menu-container {
+    padding: 40px 20px 0;
+    background-color: var(--color-bg);
+}
+
+.grid-items {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 20px;
+}
+
+.more-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 46px;
+}
+
+
+@media (max-width: 768px) {
+    .menu-container {
+        grid-template-columns: 1fr;
+    }
+}
