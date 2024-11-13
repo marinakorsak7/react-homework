@@ -1,0 +1,18 @@
+.menu-button {
+  padding: 16px 40px;
+  margin: 5px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.menu-button.active {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.menu-button:not(.active) {
+  background-color: #f4f4f4;
+  color: black;
+}  
