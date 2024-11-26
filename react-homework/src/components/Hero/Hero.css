@@ -35,16 +35,6 @@
     position: relative;
 }
 
-.buttons-container {
-    display: flex;
-    justify-content: center;
-    margin-top: 40px;
-    position: relative;
-}
-
-.buttons-container > div > button:not(:last-child) {
-    margin-right: 30px;
-}
 
 .phone-tooltip {
     position: relative;
