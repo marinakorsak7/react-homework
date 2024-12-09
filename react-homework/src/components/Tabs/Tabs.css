@@ -1,0 +1,7 @@
+.tabs-container {
+    display: flex;
+    justify-content: center;
+    padding-top: 40px;
+    gap: 30px;
+    background-color:var(--color-bg);
+}
