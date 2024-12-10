@@ -4,7 +4,7 @@ import logo from "../../assets/images/logo.svg";
 import cart from "../../assets/images/cart-icon.png";
 import { useCart } from "../CartContext/CartContext";
 
-const Header = () => {
+const Header = ({ setCurrentPage }) => {
   const { cartCount } = useCart();
 
   return (
@@ -13,10 +13,10 @@ const Header = () => {
         <img src={logo} alt="Logo" />
       </div>
       <nav className="nav-links">
-        <a href="#home">Home</a>
+        <a href="#home" onClick={() => setCurrentPage("home")}>Home</a>
         <a href="#menu">Menu</a>
         <a href="#company">Company</a>
-        <a href="#login">Login</a>
+        <a href="#login" onClick={() => setCurrentPage("login")}>Login</a> {/* Добавляем переход на Login */}
       </nav>
       <div className="cart-icon">
         <a href="#cart">
