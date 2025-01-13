@@ -1,62 +1,29 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useEffect } from "react";
 import "./Menu.css";
 import ItemCard from "../ItemCard/ItemCard";
 import Button from "../Button/Button";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
+import { fetchMenuItems, resetMenu } from "../../redux/menuSlice";
+import { useAppDispatch } from "../../redux/hooks";
 
 interface MenuProps {
   activeMenuCategory: string;
 }
 
-interface Item {
-  id: string;
-  meal: string;
-  price: number;
-  img: string;
-}
-
 const Menu: React.FC<MenuProps> = ({ activeMenuCategory }) => {
-  const [items, setItems] = useState<Item[]>([]);
-  const [page, setPage] = useState<number>(1);
-  const [perPage] = useState<number>(6);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [hasMoreItems, setHasMoreItems] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const { items, loading, error, page, hasMoreItems } = useSelector(
+    (state: RootState) => state.menu
+  );
 
   useEffect(() => {
-    fetchItems(1);
-  }, [activeMenuCategory]);
-
-  const fetchItems = async (requestedPage: number) => {
-    const url = new URL("https://65de35f3dccfcd562f5691bb.mockapi.io/api/v1/meals");
-    url.searchParams.append("page", requestedPage.toString());
-    url.searchParams.append("limit", perPage.toString());
-    url.searchParams.append("category", activeMenuCategory);
-
-    setLoading(true);
-    try {
-      const response = await axios.get<Item[]>(url.toString());
-      const newItems = response.data;
-
-      if (newItems.length > 0) {
-        setItems((prevItems) =>
-          requestedPage === 1 ? newItems : [...prevItems, ...newItems]
-        );
-        setPage(requestedPage + (newItems.length === perPage ? 1 : 0));
-        setHasMoreItems(newItems.length === perPage);
-      } else {
-        setHasMoreItems(false);
-      }
-    } catch (err) {
-      console.error("Error fetching data:", err);
-      setError((err as Error).message);
-      setHasMoreItems(false);
-    }
-    setLoading(false);
-  };
+    dispatch(resetMenu());
+    dispatch(fetchMenuItems({ category: activeMenuCategory, page: 1 }));
+  }, [activeMenuCategory, dispatch]);
 
   const handleSeeMoreClick = () => {
-    fetchItems(page);
+    dispatch(fetchMenuItems({ category: activeMenuCategory, page }));
   };
 
   return (
