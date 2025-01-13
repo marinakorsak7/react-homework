@@ -1,20 +1,33 @@
-import React, { useRef, useContext } from 'react';
-import './ItemCard.css';
-import Button from '../Button/Button';
-import { useCart } from '../CartContext/CartContext';
+import React, { useRef, useContext, ChangeEvent } from "react";
+import "./ItemCard.css";
+import Button from "../Button/Button";
+import { useCart } from "../CartContext/CartContext";
 
-const ItemCard = ({ item }) => {
+interface Item {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  imageUrl: string;
+}
+
+interface ItemCardProps {
+  item: Item;
+}
+
+const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
   const { addToCart } = useCart();
-  const quantityInput = useRef(null);
+
+  const quantityInput = useRef<HTMLInputElement>(null);
 
   const handleAddToCart = () => {
-    const quantity = parseInt(quantityInput.current.value || 0);
+    const quantity = parseInt(quantityInput.current?.value || "0", 10);
     addToCart(quantity);
   };
 
-  const handleChange = (event) => {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const filteredValue = value.replace(/[^\d]/g, "");
+    const filteredValue = value.replace(/[^\d]/g, ""); 
     event.target.value = filteredValue;
   };
 
@@ -35,11 +48,7 @@ const ItemCard = ({ item }) => {
             className="item-quantity"
             onChange={handleChange}
           />
-          <Button
-            label="Add to cart"
-            isActive={true}
-            onClick={handleAddToCart}
-          />
+          <Button label="Add to cart" isActive={true} onClick={handleAddToCart} />
         </div>
       </div>
     </div>
