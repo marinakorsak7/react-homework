@@ -1,27 +1,34 @@
-import React, { useState, FC } from "react";
+import React, { FC } from "react";
+import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import "./styles/main.css";
 import Home from "./pages/home/Home";
 import Login from "./pages/login/Login";
+import Order from "./pages/order/Order";
 import Header from "./components/Header/Header";
 import Footer from "./components/Footer/Footer";
-
-type Page = "home" | "login";
+import PrivateRoute from "./components/PrivateRoute/PrivateRoute";
 
 const App: FC = () => {
-  const [currentPage, setCurrentPage] = useState<Page>("home");
-
   return (
-    <>
-      <Header setCurrentPage={setCurrentPage} />
+    <Router>
+      <Header />
       <div>
-        {currentPage === "login" ? (
-          <Login onCancel={() => setCurrentPage("home")} />
-        ) : (
-          <Home />
-        )}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route
+            path="/order"
+            element={
+              <PrivateRoute>
+                <Order />
+              </PrivateRoute>
+            }
+          />
+          <Route path="*" element={<Navigate to="/" />} />
+        </Routes>
       </div>
       <Footer />
-    </>
+    </Router>
   );
 };
 

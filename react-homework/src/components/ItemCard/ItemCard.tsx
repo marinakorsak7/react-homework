@@ -30,6 +30,7 @@ const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
           name: item.name,
           price: item.price,
           quantity,
+          imageUrl: item.imageUrl,
         })
       );
     }
