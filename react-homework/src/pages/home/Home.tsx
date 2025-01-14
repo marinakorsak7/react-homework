@@ -1,41 +1,30 @@
-import React, { useState } from "react";
-import "../../styles/main.css";
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Hero from "../../components/Hero/Hero";
-import Menu from "../../components/Menu/Menu";
 import Tabs from "../../components/Tabs/Tabs";
+import Menu from "../../components/Menu/Menu";
+import { RootState } from "../../redux/store";
+import { setActiveCategory, CATEGORIES } from "../../redux/menuSlice";
 
-enum CATEGORIES {
-  DESSERT = "Dessert",
-  DINNER = "Dinner",
-  BREAKFAST = "Breakfast",
-}
-
-interface MenuTabItem {
-  label: string;
-  id: number;
-  value: CATEGORIES;
-}
-
-const MENU_TABS_ITEMS: MenuTabItem[] = [
+const MENU_TABS_ITEMS = [
   { label: "Dessert", id: 0, value: CATEGORIES.DESSERT },
   { label: "Dinner", id: 1, value: CATEGORIES.DINNER },
   { label: "Breakfast", id: 2, value: CATEGORIES.BREAKFAST },
 ];
 
 const Home: React.FC = () => {
-  const [activeMenuCategory, setActiveMenuCategory] = useState<CATEGORIES>(
-    CATEGORIES.DESSERT
-  );
+  const dispatch = useDispatch();
+  const activeCategory = useSelector((state: RootState) => state.menu.activeCategory);
 
   return (
     <div>
       <Hero />
       <Tabs
         items={MENU_TABS_ITEMS}
-        onChange={(value: CATEGORIES) => setActiveMenuCategory(value)}
-        activeItem={activeMenuCategory}
+        onChange={(value: CATEGORIES) => dispatch(setActiveCategory(value))}
+        activeItem={activeCategory}
       />
-      <Menu activeMenuCategory={activeMenuCategory} />
+      <Menu activeMenuCategory={activeCategory} />
     </div>
   );
 };

@@ -1,36 +1,34 @@
 import React, { FC } from "react";
+import { Link } from "react-router-dom";
 import "./Header.css";
 import logo from "../../assets/images/logo.svg";
 import cart from "../../assets/images/cart-icon.png";
-import { useCart } from "../CartContext/CartContext";
+import { useSelector } from "react-redux";
+import { RootState } from "../../redux/store";
 
-interface HeaderProps {
-    setCurrentPage: (page: "home" | "login") => void;
-}
-
-const Header: FC<HeaderProps> = ({ setCurrentPage }) => {
-  const { cartCount } = useCart();
+const Header: FC = () => {
+  const cartCount = useSelector((state: RootState) =>
+    state.cart.items.reduce((total, item) => total + item.quantity, 0)
+  );
 
   return (
     <header className="header container">
       <div className="logo">
-        <img src={logo} alt="Logo" />
+        <Link to="/">
+          <img src={logo} alt="Logo" />
+        </Link>
       </div>
       <nav className="nav-links">
-        <a href="#home" onClick={() => setCurrentPage("home")}>
-          Home
-        </a>
-        <a href="#menu">Menu</a>
-        <a href="#company">Company</a>
-        <a href="#login" onClick={() => setCurrentPage("login")}>
-          Login
-        </a>
+        <Link to="/">Home</Link>
+        <Link to="/menu">Menu</Link>
+        <Link to="/company">Company</Link>
+        <Link to="/login">Login</Link>
       </nav>
       <div className="cart-icon">
-        <a href="#cart">
+        <Link to="/order">
           <img src={cart} alt="Cart" />
           <span className="cart-counter">{cartCount}</span>
-        </a>
+        </Link>
       </div>
     </header>
   );
