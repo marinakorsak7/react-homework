@@ -8,7 +8,19 @@
     --color-black-text: #222222;
     --color-black-base: #08090A;
     --color-bg: #F5FBFC;
+    --background-color: var(--color-bg);
     --font-main: 'Inter', sans-serif;
+}
+
+[data-theme="dark"] {
+    --color-primary: #2CA5A6;
+    --color-white: #08090A;
+    --color-dark-blue: #adacb5;
+    --color-gray: #A5B1CF;
+    --color-black-text: #E5E5E5;
+    --color-black-base: #222222;
+    --color-bg: #0F172A;
+    --background-color: var(--color-black-base);
 }
 
 body {
