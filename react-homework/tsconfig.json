@@ -1,14 +1,19 @@
 {
   "compilerOptions": {
-    "target": "es5",
-    "lib": ["dom", "dom.iterable", "esnext"],
-    "jsx": "react-jsx",
-    "module": "esnext",
-    "moduleResolution": "node",
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "strict": true
+    "target": "es5", // Можно оставить es5, но es2016 или esnext будет лучше для современных библиотек.
+    "lib": ["dom", "dom.iterable", "esnext"], // Поддержка браузерного API и последних возможностей ECMAScript
+    "jsx": "react-jsx", // JSX синтаксис для React 17+
+    "module": "esnext", // Используем ESM, но для Jest поддерживаем CommonJS
+    "moduleResolution": "node", // Модули разрешаются через Node.js
+    "esModuleInterop": true, // Позволяет использовать импорты из CommonJS
+    "skipLibCheck": true, // Пропускаем проверку типов внутри node_modules
+    "strict": true, // Включаем строгую типизацию
+    "allowSyntheticDefaultImports": true, // Поддержка импорта default для CommonJS
+    "types": ["jest", "node"] // Добавляем типы Jest и Node.js
   },
-  "include": ["src/**/*", "custom.d.ts"],
-  "exclude": ["node_modules"]
+  "include": ["src/**/*", "custom.d.ts"], // Включаем файлы проекта
+  "exclude": ["node_modules"], // Исключаем node_modules
+  "ts-node": {
+    "transpileOnly": true // Если вы используете ts-node
+  }
 }

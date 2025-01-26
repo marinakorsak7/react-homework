@@ -1,7 +1,8 @@
-import React, { useRef, useContext, ChangeEvent } from "react";
+import React, { useRef, ChangeEvent } from "react";
 import "./ItemCard.css";
 import Button from "../Button/Button";
-import { useCart } from "../CartContext/CartContext";
+import { useDispatch } from "react-redux";
+import { addToCart } from "../../redux/cartSlice";
 
 interface Item {
   id: string;
@@ -16,18 +17,28 @@ interface ItemCardProps {
 }
 
 const ItemCard: React.FC<ItemCardProps> = ({ item }) => {
-  const { addToCart } = useCart();
+  const dispatch = useDispatch();
 
   const quantityInput = useRef<HTMLInputElement>(null);
 
   const handleAddToCart = () => {
     const quantity = parseInt(quantityInput.current?.value || "0", 10);
-    addToCart(quantity);
+    if (quantity > 0) {
+      dispatch(
+        addToCart({
+          id: item.id,
+          name: item.name,
+          price: item.price,
+          quantity,
+          imageUrl: item.imageUrl,
+        })
+      );
+    }
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
-    const filteredValue = value.replace(/[^\d]/g, ""); 
+    const filteredValue = value.replace(/[^\d]/g, "");
     event.target.value = filteredValue;
   };
 
